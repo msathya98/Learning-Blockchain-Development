@@ -1,18 +1,16 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.5.13;
+pragma solidity >=0.6.0 <0.8.0;
 
-contract SimpleWallet {
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+
+contract SimpleWallet is Ownable {
     
-    address public owner;
+   
+
     
-    constructor() public {
-        owner = msg.sender;
-        
-    }
-    
-   function withdrawMoney(address payable _to, uint _amount) public {
-       require(owner == msg.sender, "You are not the owner");
+   function withdrawMoney(address payable _to, uint _amount) public onlyOwner {
+      
        _to.transfer(_amount);
    }
    
