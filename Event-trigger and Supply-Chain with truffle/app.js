@@ -16,26 +16,25 @@ this.accounts = await this.web3.eth.getAccounts();
 const networkId = await this.web3.eth.net.getId();
 
 this.itemManager = new this.web3.eth.Contract(
-this.setState({loaded:true});
-} catch (error) {
-// Catch any errors for any of the above operations.
-
- this.itemManager
- 
-);
-);
 ItemManager.abi,
-ItemManager.networks[networkId] && ItemManager.networks[networkId].address,
+ItemManager.networks[this.networkId] && ItemManager.networks[this.networkId].address,
+);
 this.item = new this.web3.eth.Contract(
 Item.abi,
-Item.networks[networkId] && Item.networks[networkId].address,
-alert(
+Item.networks[this.networkId] && Item.networks[this.networkId].address,
+ 
+);
+
+this.setState({loaded:true});
+
+} catch (error) {
+  alert(
 `Failed to load web3, accounts, or contract. Check console for details.`,
 );
       console.error(error);
     }
 };
-
+// Catch any errors for any of the above operations.
 handleSubmit = async () => {
 const { cost, itemName } = this.state;
 console.log(itemName, cost, this.itemManager);
@@ -44,20 +43,23 @@ this.accounts[0] });
 console.log(result);
 alert("Send "+cost+" Wei to "+result.events.SupplyChainStep.returnValues._address);
 };
+
 handleInputChange = (event) => {
 const target = event.target;
-const value = target.type === 'checkbox' ? target.checked : target.value; const name = target.name;
+const value = target.type === 'checkbox' ? target.checked : target.value; 
+const name = target.name;
+
   this.setState({
     [name]: value
 });
 }
 
 
-
 render() {
-if (!this.state,.loaded) {
+if (!this.state.loaded) {
 return <div>Loading Web3, accounts, and contract...</div>;
-} return (
+} 
+return (
 <div className="App">
 <h1>Simply Payment/Supply Chain Example!</h1> 
 <h2>Items</h2>
@@ -68,5 +70,6 @@ Item Name: <input type="text" name="itemName" value={this.state.itemName} onChan
 
 <button type="button" onClick={this.handleSubmit}>Create new Item</button>
 </div>
-); 
+)
 }
+
